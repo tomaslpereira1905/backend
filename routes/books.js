@@ -11,6 +11,3 @@ let results = await db.collection('books').find({})
 res.send(results).status(200);
 });
 export default router;
-ola
-
-ola!!
