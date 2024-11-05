@@ -10,5 +10,3 @@ console.error(e);
 // Database name
 let db = conn.db("ProjetoADAD");
 export default db;
-
-//ola
