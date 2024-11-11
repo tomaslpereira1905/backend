@@ -11,21 +11,6 @@ const router = express.Router();
 // res.send(results).status(200);
 // });
 
-// Pesquisar pelo Id, falta o top 3 livros 
-// router.get("/:id", async (req, res) => {
-//     try {
-        
-//         let results = await db.collection('users').find({
-//             _id: parseInt(req.params.id) 
-//         }).toArray();
-
-        
-//         res.status(200).send(results);
-//     } catch (error) {
-       
-//         res.status(500).send({ error: "Erro na busca de dados" });
-//     }
-// });
 
 //Ponto 2
 //Teste:
@@ -40,5 +25,22 @@ res.send(results).status(200);
 
 });
 
+//Ponto 6
+// Pesquisar pelo Id, falta o top 3 livros 
+
+router.get("/:id", async (req, res) => {
+    try {
+        
+        let results = await db.collection('users').find({
+            _id: parseInt(req.params.id) 
+        }).toArray();
+
+        
+        res.status(200).send(results);
+    } catch (error) {
+       
+        res.status(500).send({ error: "Erro na busca de dados" });
+    }
+});
 
 export default router;
