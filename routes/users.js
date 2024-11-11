@@ -31,13 +31,11 @@ const router = express.Router();
 //Teste:
 //http://localhost:3000/users?page=1
 router.get("/", async(req,res)=>{
-    let page = req.query.page;
+let page = req.query.page;
 let results = await db.collection('users').find({}).
 skip((page*10)-10).limit(10)
 .toArray();
-
 res.send(results).status(200);
-
 });
 
 
