@@ -5,15 +5,6 @@ import { ObjectId } from "mongodb";
 const router = express.Router();
 // return first 50 documents from movies collection
 
-//Pode ser apagado
-/* 
-router.get("/", async (req, res) => {
-let results = await db.collection('books').find({})
-.limit(50)
-.toArray();
-res.send(results).status(200);
-}); */
-//Até aqui
 
 //Ponto 1 a funcionar
 //Alterar o numero 2 para mudar cada página
