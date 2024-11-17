@@ -35,7 +35,7 @@ const router = express.Router();
 //       }
   
 //       const radiusInRadians = parseFloat(radius) / 6378100;
-  //Converte o raio fornecido em radianos, por isso é necessário dividir pelo raio da terra em metros
+//   //Converte o raio fornecido em radianos, por isso é necessário dividir pelo raio da terra em metros
 //       const livrarias = await db.collection('livrarias').find({
 //         "geometry.coordinates": {
 //           $geoWithin: {
@@ -49,34 +49,8 @@ const router = express.Router();
 //       console.error("Erro ao buscar livrarias dentro do raio:", error);
 //       res.status(500).send('Erro ao buscar livrarias dentro do raio');
 //     }
+// })
 
-
-//Ponto 20.3 (Verificado)
-
-// router.get('/within', async (req, res) => {
-//     try {
-//       const { longitude, latitude, radius } = req.query;
-  
-//       if (!longitude || !latitude || !radius) {
-//         return res.status(400).send('Longitude, latitude e radius são necessários.');
-//       }
-  
-//       const radiusInRadians = parseFloat(radius) / 6378100;
-//   //Converte o raio fornecido em radianos, por isso é necessário dividir pelo raio da terra em metros
-//       const livrarias = await db.collection('livrarias').find({
-//         "geometry.coordinates": {
-//           $geoWithin: {
-//             $centerSphere: [[parseFloat(longitude), parseFloat(latitude)], radiusInRadians]
-//           }
-//         }
-//       }).toArray();
-  
-//       res.status(200).json(livrarias);
-//     } catch (error) {
-     
-//       res.status(500).send('Erro na procura de livrarias dentro do raio');
-//     }
-//   });
 
 
 //Ponto 20.5
