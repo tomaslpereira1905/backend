@@ -23,14 +23,19 @@
 import express from 'express'
 import books from "./routes/books.js";
 import users from "./routes/users.js";
-import comments from "./routes/books.js";
-import livrarias from "./routes/books.js";
+import comments from "./routes/comments.js";
+import livrarias from "./routes/livrarias.js";
 
 const app = express()
 const port = 3000
 
 app.use(express.json());
 
+app.get('/',(req, res) => {
+
+    res.send('Backend!')
+}
+)
 // Load the /movies routes
 app.use("/books", books);
 
