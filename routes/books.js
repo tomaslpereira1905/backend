@@ -35,7 +35,6 @@ const router = express.Router();
 // });
 
 
-
 // //Ponto 3 (Verificado)
 // //POST /books - Adicionar 1 ou vários livros
 // router.post("/", async(req, res) => {
