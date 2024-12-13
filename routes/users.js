@@ -15,13 +15,29 @@ const router = express.Router();
 
 //Ponto 2 (Verificado)
 
-// router.get("/", async(req,res)=>{
-// let page = req.query.page;
-// let results = await db.collection('users').find({}).
-// skip((page*10)-10).limit(10)
-// .toArray();
-// res.send(results).status(200);
-// });
+router.get("/", async (req, res) => {
+    let page = parseInt(req.query.page) || 1;
+    const pageSize = 10;
+
+    const totalUsers = await db.collection('users').countDocuments();
+    const totalPages = Math.ceil(totalUsers / pageSize);
+
+    if (page > totalPages) {
+      page = totalPages;
+    }
+
+    const results = await db.collection('users')
+      .find({})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .toArray();
+
+    res.status(200).send({
+      currentPage: page,
+      totalPages: totalPages,
+      users: results,
+    });
+  });
 
 //Ponto 4 (Verificado)
 // router.post("/", async(req, res) => {
@@ -49,24 +65,24 @@ const router = express.Router();
 // Pesquisar pelo Id e o top 3 livros
 
 
-// router.get("/:id", async (req, res) => {
-//     try {
-    
-//         let userId = parseInt(req.params.id);
-//         let user = await db.collection('users').findOne({ _id: userId });
-//         if (!user) {
-//             return res.status(404).send({ error: "Utilizador não foi encontrado" });
-//         }
-//         let topReviews = user.reviews
-//             .sort((a, b) => b.score - a.score) // Ordena de forma decrescente
-//             .slice(0, 3); // Escolhe as 3 com maior score
-//         user.top_books = topReviews.map(review => review.book_id);
+router.get("/:id", async (req, res) => {
+    try {
 
-//         res.status(200).send(user);
-//     } catch (error) {
-//                 res.status(500).send({ error: "Erro, dados não encontrados" });
-//     }
-// });
+        let userId = parseInt(req.params.id);
+        let user = await db.collection('users').findOne({ _id: userId });
+        if (!user) {
+            return res.status(404).send({ error: "Utilizador não foi encontrado" });
+        }
+        let topReviews = user.reviews
+            .sort((a, b) => b.score - a.score) // Ordena de forma decrescente
+            .slice(0, 3); // Escolhe as 3 com maior score
+        user.top_books = topReviews.map(review => review.book_id);
+
+        res.status(200).send(user);
+    } catch (error) {
+                res.status(500).send({ error: "Erro, dados não encontrados" });
+    }
+});
 
 //Ponto 8 (Verificado)
 
@@ -90,28 +106,31 @@ const router = express.Router();
 
 //Ponto 10 (Verificado)
 
-// router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
 
-//     const user_id = parseInt(req.params.id);
-//     const updateData = req.body;
+    const user_id = parseInt(req.params.id);
+    const updateData = req.body;
 
-//     try {
-//         const trueId = await db.collection('users').findOne({ _id: user_id });
+    try {
+        const trueId = await db.collection('users').findOne({ _id: user_id });
 
-//         if (!trueId) {
-//             return res.status(404).send({ message: " Utilizador não encontrado" })
-//         }
+        if (!trueId) {
+            return res.status(404).send({ message: " Utilizador não encontrado" })
+        }
 
-//         const updatedUser = await db.collection('users').findOneAndUpdate(
-//             { _id: user_id },
-//             { $set: updateData }
-//         );
+        const updatedUser = await db.collection('users').findOneAndUpdate(
+            { _id: user_id },
+            { $set: updateData }
+        );
+        if(updatedUser.findCount == 0){
+            return res.status(400).send({ message: "Não foi possivel dar update ao user"});
+          }
 
-//         res.status(200).send({ message: "Utilizador atualizado com sucesso" })
-//     } catch (error) {
-//         res.status(500).send({ message: "Erro ao atualizar o Utilizador" })
-//     }
-// })
+        res.status(200).send({ message: "Utilizador atualizado com sucesso" })
+    } catch (error) {
+        res.status(500).send({ message: "Erro ao atualizar o Utilizador" })
+    }
+})
 
 export default router;
 
